@@ -1,0 +1,128 @@
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #121212, #1f1f1f);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.register-wrapper {
+  display: flex;
+  width: 90%;
+  max-width: 1000px;
+  background-color: #1b1b1b;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.register-info {
+  flex: 1;
+  padding: 40px;
+  background: linear-gradient(to bottom, #1db954, #1ed760);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-info h1 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.register-info p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.register-form-container {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-form {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  color: #1db954;
+}
+
+.register-form label {
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.register-form input {
+  margin-bottom: 20px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2c2c2c;
+  color: #fff;
+  font-size: 14px;
+}
+
+.register-form input::placeholder {
+  color: #aaa;
+}
+
+.register-form input:focus {
+  outline: none;
+  background-color: #333;
+}
+
+.register-form button {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1db954;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.register-form button:hover {
+  background-color: #1ed760;
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.register-footer a {
+  color: #1db954;
+  text-decoration: none;
+}
+
+.register-footer a:hover {
+  color: #1ed760;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .register-wrapper {
+    flex-direction: column;
+  }
+
+  .register-info {
+    text-align: center;
+  }
+}

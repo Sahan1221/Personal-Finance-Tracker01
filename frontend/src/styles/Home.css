@@ -1,0 +1,111 @@
+/* Home Page - Dark Modern Spendee-style */
+
+.home-page {
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  background-color: #121212;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #1db954, #1ed760);
+  text-align: center;
+  padding: 80px 20px;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #121212;
+  color: #1ed760;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #1ed760;
+  color: #121212;
+}
+
+/* Features Section */
+.features-section {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #1ed760;
+}
+
+.features-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.feature-card {
+  background-color: #1b1b1b;
+  padding: 30px 20px;
+  border-radius: 12px;
+  width: 250px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+  transition: 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #1ed760;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Overview Section */
+.overview-section {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.overview-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #1ed760;
+}
+
+.overview-section p {
+  color: #ccc;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}

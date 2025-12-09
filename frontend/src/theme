@@ -1,0 +1,17 @@
+import { createTheme } from "@mui/material";
+
+const theme = createTheme({
+  palette: {
+    primary: { main: "#1976d2" },
+    secondary: { main: "#f50057" }
+  },
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: { width: 240, paddingTop: 60, background: "#0f1724", color: "#fff" }
+      }
+    }
+  }
+});
+
+export default theme;

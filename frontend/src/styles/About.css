@@ -1,0 +1,96 @@
+/* About Page - Modern Spendee-style */
+
+.about-page {
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  background-color: #121212;
+  line-height: 1.6;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #1db954, #1ed760);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #121212;
+  color: #1ed760;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #1ed760;
+  color: #121212;
+}
+
+/* About Section */
+.about-section, .mission-section, .team-section, .contact-section {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.about-section h2, .mission-section h2, .team-section h2, .contact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #1ed760;
+}
+
+.about-section p, .mission-section p, .team-section p {
+  margin-bottom: 20px;
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* Contact Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form input, .contact-form textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1b1b1b;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.contact-form button {
+  background-color: #1ed760;
+  color: #121212;
+  padding: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-form button:hover {
+  background-color: #1db954;
+}
