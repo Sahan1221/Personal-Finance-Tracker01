@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Dashboard.css";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from "chart.js";
-import { Pie, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
+import { Pie } from "react-chartjs-2";
 
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 export default function Dashboard({ user, setUser }) {
   const [transactions, setTransactions] = useState([]);
@@ -28,26 +43,77 @@ export default function Dashboard({ user, setUser }) {
     }
   }, [user]);
 
+  // Add transaction
   const handleAddTransaction = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/transactions/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ amount, type, category, description, date }),
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/transactions/add",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            amount,
+            type,
+            category,
+            description,
+            date,
+          }),
+        }
+      );
+
       const data = await res.json();
+
       if (data.transaction) {
         setTransactions((prev) => [...prev, data.transaction]);
-        setAmount(""); setCategory(""); setDescription(""); setDate(""); setType("income");
-      } else alert(data.error || "Error adding transaction");
+        setAmount("");
+        setCategory("");
+        setDescription("");
+        setDate("");
+        setType("income");
+      } else {
+        alert(data.error || "Error adding transaction");
+      }
     } catch (err) {
       console.log(err);
       alert("Server error");
     }
   };
 
+  // Delete transaction
+  const handleDeleteTransaction = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this transaction?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/transactions/delete/${id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setTransactions((prev) =>
+          prev.filter((t) => t._id !== id)
+        );
+      } else {
+         alert(data.error || "Failed to delete transaction");
+      }
+
+    } catch (err) {
+      console.log(err);
+      alert("Server error");
+    }
+  };
+
+  // Logout
   const handleLogout = async () => {
     await fetch("http://localhost:5000/api/auth/logout", {
       method: "POST",
@@ -56,17 +122,23 @@ export default function Dashboard({ user, setUser }) {
     setUser(null);
   };
 
-  if (!user)
+  if (!user) {
     return (
       <div className="dashboard-guest">
         <h2>Access Your Dashboard</h2>
         <p>Please login to see your financial overview.</p>
       </div>
     );
+  }
 
-  // Prepare chart data
-  const income = transactions.filter(t => t.type === "income").reduce((sum, t) => sum + Number(t.amount), 0);
-  const expense = transactions.filter(t => t.type === "expense").reduce((sum, t) => sum + Number(t.amount), 0);
+  // Chart data
+  const income = transactions
+    .filter((t) => t.type === "income")
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const expense = transactions
+    .filter((t) => t.type === "expense")
+    .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const pieData = {
     labels: ["Income", "Expense"],
@@ -82,27 +154,58 @@ export default function Dashboard({ user, setUser }) {
     <div className="dashboard-page">
       <div className="dashboard-header">
         <h1>Welcome, {user.name}!</h1>
-        <button onClick={handleLogout} className="logout-btn">Logout</button>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
       </div>
 
       <div className="dashboard-content">
         <div className="add-transaction">
           <h2>Add Transaction</h2>
           <form onSubmit={handleAddTransaction}>
-            <input type="number" placeholder="Amount" value={amount} onChange={(e) => setAmount(e.target.value)} required />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              required
+            />
+
             <select value={type} onChange={(e) => setType(e.target.value)}>
               <option value="income">Income</option>
               <option value="expense">Expense</option>
             </select>
-            <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} required />
-            <input type="text" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} required />
-            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
+
+            <input
+              type="text"
+              placeholder="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            />
+
+            <input
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+
             <button type="submit">Add</button>
           </form>
         </div>
 
         <div className="transactions-list">
           <h2>Transactions</h2>
+
           {transactions.length === 0 ? (
             <p>No transactions yet</p>
           ) : (
@@ -114,6 +217,7 @@ export default function Dashboard({ user, setUser }) {
                   <th>Category</th>
                   <th>Description</th>
                   <th>Amount</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,6 +228,14 @@ export default function Dashboard({ user, setUser }) {
                     <td>{t.category}</td>
                     <td>{t.description}</td>
                     <td>{t.amount}</td>
+                    <td>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDeleteTransaction(t._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
