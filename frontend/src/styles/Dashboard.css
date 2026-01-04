@@ -1,3 +1,8 @@
+/* ================= GLOBAL ================= */
+* {
+  box-sizing: border-box;
+}
+
 .dashboard-page {
   min-height: 100vh;
   padding: 30px;
@@ -6,6 +11,7 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
+/* ================= HEADER ================= */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
@@ -28,19 +34,24 @@
   background-color: #ff2a3d;
 }
 
+/* ================= LAYOUT ================= */
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 30px;
 }
 
-.add-transaction, .transactions-list, .charts {
+/* ================= CARDS ================= */
+.add-transaction,
+.transactions-list,
+.charts {
   background-color: #1b1b1b;
   padding: 25px;
   border-radius: 12px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
+/* ================= ADD TRANSACTION ================= */
 .add-transaction form {
   display: flex;
   flex-direction: column;
@@ -65,39 +76,125 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 5px;
 }
 
 .add-transaction button:hover {
   background-color: #1ed760;
 }
 
+/* Edit mode highlight */
+.add-transaction.editing {
+  border: 1px solid #ffa726;
+  box-shadow: 0 0 15px rgba(255, 167, 38, 0.3);
+}
+
+/* Cancel edit button */
+.add-transaction .cancel-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #555;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-transaction .cancel-btn:hover {
+  background-color: #777;
+}
+
+/* ================= FILTERS ================= */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2c2c2c;
+  color: #fff;
+  font-size: 14px;
+}
+
+.filters input::placeholder {
+  color: #aaa;
+}
+
+/* ================= TRANSACTIONS ================= */
 .transactions-list table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.transactions-list th, .transactions-list td {
+.transactions-list th,
+.transactions-list td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #2c2c2c;
 }
 
+/* Action buttons */
+.transactions-list .edit-btn,
+.transactions-list .delete-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.3s;
+  margin-right: 6px;
+}
+
+/* Edit */
+.transactions-list .edit-btn {
+  background-color: #ffa726;
+  color: #000;
+}
+
+.transactions-list .edit-btn:hover {
+  background-color: #ff9800;
+}
+
+/* Delete */
+.transactions-list .delete-btn {
+  background-color: #ff4b5c;
+  color: #fff;
+}
+
+.transactions-list .delete-btn:hover {
+  background-color: #ff2a3d;
+}
+
+/* ================= CHART ================= */
 .charts {
   grid-column: span 2;
 }
 
 .chart-container {
   width: 100%;
-  max-width: 400px; /* limits the chart width */
-  height: auto;
+  max-width: 400px;
+  height: 300px;
   margin: 0 auto;
+
   background-color: #1b1b1b;
   padding: 20px;
   border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
-/* Guest view */
+/* ================= GUEST ================= */
 .dashboard-guest {
   min-height: 80vh;
   display: flex;
@@ -120,91 +217,187 @@
   color: #bbb;
 }
 
-/* Action buttons (Edit & Delete) */
-.transactions-list .edit-btn,
-.transactions-list .delete-btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: bold;
-  transition: 0.3s;
-  margin-right: 6px;
-}
-
-/* Edit button */
-.transactions-list .edit-btn {
-  background-color: #ffa726; /* orange */
-  color: #000;
-}
-
-.transactions-list .edit-btn:hover {
-  background-color: #ff9800;
-}
-
-/* Delete button (already referenced in JSX) */
-.transactions-list .delete-btn {
-  background-color: #ff4b5c;
-  color: #fff;
-}
-
-.transactions-list .delete-btn:hover {
-  background-color: #ff2a3d;
-}
-
-/* Update button (edit mode uses same button) */
-.add-transaction button {
-  margin-top: 5px;
-}
-
-/* Cancel edit button */
-.add-transaction .cancel-btn {
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  background-color: #555;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.add-transaction .cancel-btn:hover {
-  background-color: #777;
-}
-
-/* Filters */
-.filters {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.filters input,
-.filters select {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: none;
-  background-color: #2c2c2c;
-  color: #fff;
-  font-size: 14px;
-}
-
-.filters input::placeholder {
-  color: #aaa;
-}
-
-@media (max-width: 600px) {
-  .filters {
-    flex-direction: column;
-  }
-}
-
-/* Responsive */
+/* ================= TABLET ================= */
 @media (max-width: 900px) {
   .dashboard-content {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ================= MODERN MOBILE ================= */
+@media (max-width: 768px) {
+
+  .dashboard-page {
+    padding: 15px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .logout-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;      /* full width on mobile */
+  max-width: 300px; /* optional max width */
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  background-color: #ff4b5c;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #ff2a3d;
+}
+
+
+  /* Mobile flow order */
+  .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .add-transaction {
+    order: 1;
+    background: linear-gradient(145deg, #1b1b1b, #222);
+    border-radius: 16px;
+  }
+
+  .transactions-list {
+    order: 2;
+    border-radius: 16px;
+  }
+
+  .charts {
+    order: 3;
+    border-radius: 16px;
+  }
+
+  /* Inputs */
+  .add-transaction input,
+  .add-transaction select,
+  .add-transaction button,
+  .add-transaction .cancel-btn {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  /* Filters */
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  /* Transactions table scroll */
+  .transactions-list {
+    overflow-x: auto;
+  }
+
+  .transactions-list table {
+    min-width: 650px;
+  }
+
+  .transactions-list th,
+  .transactions-list td {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* Buttons */
+  .transactions-list .edit-btn,
+  .transactions-list .delete-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  /* Chart */
+  .chart-container {
+  max-width: 100%;
+  height: 260px;
+  padding: 12px;
+  }
+
+  .chart-container h3{
+    display: none;
+  }
+
+  
+}
+
+@media (max-width: 768px) {
+
+  /* Ensure the table fits the screen */
+  .transactions-list {
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0;
+  }
+
+  .transactions-list tbody tr {
+    display: block;
+    background-color: #2c2c2c;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .transactions-list td {
+    display: block;
+    width: 100%;
+    padding: 4px 0;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+
+  .transactions-list td::before {
+    content: attr(data-label) ": ";
+    font-weight: bold;
+    color: #aaa;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  /* Buttons container */
+  .transactions-list td:last-child {
+    display: flex !important;      /* force flex */
+    flex-direction: row !important; /* row layout first */
+    flex-wrap: wrap !important;    /* wrap if needed */
+    gap: 6px;
+    margin-top: 8px;
+    width: 100%;                   /* full width */
+    box-sizing: border-box;
+  }
+
+  /* Edit/Delete buttons */
+  .transactions-list .edit-btn,
+  .transactions-list .delete-btn {
+    flex: 1 1 auto;        /* shrink or grow as needed */
+    min-width: 100px;      /* buttons always tappable */
+    max-width: 10%;        /* prevent them from stretching too much */
+    box-sizing: border-box;
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  /* Hide the table header on mobile */
+  .transactions-list thead {
+    display: none;
   }
 }

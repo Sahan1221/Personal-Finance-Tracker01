@@ -350,29 +350,19 @@ const handleUpdateTransaction = async (e) => {
               <tbody>
                 {filteredTransactions.map((t) => (
                   <tr key={t._id}>
-                    <td>{new Date(t.date).toLocaleDateString()}</td>
-                    <td>{t.type}</td>
-                    <td>{t.category}</td>
-                    <td>{t.description}</td>
-                    <td>{t.amount}</td>
-                    <td>
-                      <button
-                        className="edit-btn"
-                        onClick={() => handleEditClick(t)}
-                      >
-                        Edit
-                      </button>
-                    
-                      <button
-                        className="delete-btn"
-                        onClick={() => handleDeleteTransaction(t._id)}
-                      >
-                        Delete
-                      </button>
+                    <td data-label="Date">{new Date(t.date).toLocaleDateString()}</td>
+                    <td data-label="Type">{t.type}</td>
+                    <td data-label="Category">{t.category}</td>
+                    <td data-label="Description">{t.description}</td>
+                    <td data-label="Amount">{t.amount}</td>
+                    <td data-label="Action">
+                      <button className="edit-btn" onClick={() => handleEditClick(t)}>✏️</button>
+                      <button className="delete-btn" onClick={() => handleDeleteTransaction(t._id)}>🗑️</button>
                     </td>
                   </tr>
                 ))}
               </tbody>
+               
             </table>
           )}
         </div>
@@ -380,7 +370,22 @@ const handleUpdateTransaction = async (e) => {
         <div className="charts">
           <div className="chart-container">
             <h3>Income vs Expense</h3>
-            <Pie data={pieData} />
+            <Pie
+              data={pieData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: "bottom",
+                    labels: {
+                      padding: 15,
+                    },
+                  },
+                },
+              }}
+            />
+
           </div>
         </div>
       </div>
