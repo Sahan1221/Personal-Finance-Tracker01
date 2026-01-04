@@ -31,6 +31,11 @@ export default function Dashboard({ user, setUser }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
 
+  const [filterType, setFilterType] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+
+
 
   // Fetch transactions
   useEffect(() => {
@@ -214,6 +219,23 @@ const handleUpdateTransaction = async (e) => {
     ],
   };
 
+  //Filter Transaction
+  const filteredTransactions = transactions.filter((t) => {
+  const matchType =
+    filterType === "all" || t.type === filterType;
+
+  const matchCategory =
+    filterCategory === "" ||
+    t.category.toLowerCase().includes(filterCategory.toLowerCase());
+
+  const matchDate =
+    filterDate === "" ||
+    t.date.split("T")[0] === filterDate;
+
+  return matchType && matchCategory && matchDate;
+});
+
+
   return (
     <div className="dashboard-page">
       <div className="dashboard-header">
@@ -287,9 +309,32 @@ const handleUpdateTransaction = async (e) => {
 
         <div className="transactions-list">
           <h2>Transactions</h2>
+          <div className="filters">
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
 
-          {transactions.length === 0 ? (
-            <p>No transactions yet</p>
+            <input
+              type="text"
+              placeholder="Filter by category"
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+            />
+
+            <input
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+            />
+          </div>
+    
+          {filteredTransactions.length === 0 ? (
+            <p>No matching transactions</p>
           ) : (
             <table>
               <thead>
@@ -303,7 +348,7 @@ const handleUpdateTransaction = async (e) => {
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((t) => (
+                {filteredTransactions.map((t) => (
                   <tr key={t._id}>
                     <td>{new Date(t.date).toLocaleDateString()}</td>
                     <td>{t.type}</td>
