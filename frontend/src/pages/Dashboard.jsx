@@ -28,6 +28,10 @@ export default function Dashboard({ user, setUser }) {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
+
+
   // Fetch transactions
   useEffect(() => {
     if (user) {
@@ -113,6 +117,66 @@ export default function Dashboard({ user, setUser }) {
     }
   };
 
+  // Edit Transaction
+  const handleEditClick = (transaction) => {
+    setIsEditing(true);
+    setEditId(transaction._id);
+
+    setAmount(transaction.amount);
+    setType(transaction.type);
+    setCategory(transaction.category);
+    setDescription(transaction.description);
+    setDate(transaction.date.split("T")[0]);
+};
+
+// Update Transaction Handler
+const handleUpdateTransaction = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/transactions/edit/${editId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          amount,
+          type,
+          category,
+          description,
+          date,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setTransactions((prev) =>
+        prev.map((t) =>
+          t._id === editId ? data.transaction : t
+        )
+      );
+
+      // Reset form
+      setIsEditing(false);
+      setEditId(null);
+      setAmount("");
+      setType("income");
+      setCategory("");
+      setDescription("");
+      setDate("");
+    } else {
+      alert(data.error || "Failed to update");
+    }
+  } catch (err) {
+    console.log(err);
+    alert("Server error");
+  }
+};
+
+
   // Logout
   const handleLogout = async () => {
     await fetch("http://localhost:5000/api/auth/logout", {
@@ -162,7 +226,7 @@ export default function Dashboard({ user, setUser }) {
       <div className="dashboard-content">
         <div className="add-transaction">
           <h2>Add Transaction</h2>
-          <form onSubmit={handleAddTransaction}>
+          <form onSubmit={isEditing ? handleUpdateTransaction : handleAddTransaction}>
             <input
               type="number"
               placeholder="Amount"
@@ -199,7 +263,25 @@ export default function Dashboard({ user, setUser }) {
               required
             />
 
-            <button type="submit">Add</button>
+            <button type="submit">{isEditing ? "Update" : "Add"}</button>
+            {isEditing && (
+                <button
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => {
+                    setIsEditing(false);
+                    setEditId(null);
+                    setAmount("");
+                    setType("income");
+                    setCategory("");
+                    setDescription("");
+                    setDate("");
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
+
           </form>
         </div>
 
@@ -229,6 +311,13 @@ export default function Dashboard({ user, setUser }) {
                     <td>{t.description}</td>
                     <td>{t.amount}</td>
                     <td>
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditClick(t)}
+                      >
+                        Edit
+                      </button>
+                    
                       <button
                         className="delete-btn"
                         onClick={() => handleDeleteTransaction(t._id)}

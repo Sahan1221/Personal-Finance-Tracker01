@@ -120,6 +120,61 @@
   color: #bbb;
 }
 
+/* Action buttons (Edit & Delete) */
+.transactions-list .edit-btn,
+.transactions-list .delete-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: 0.3s;
+  margin-right: 6px;
+}
+
+/* Edit button */
+.transactions-list .edit-btn {
+  background-color: #ffa726; /* orange */
+  color: #000;
+}
+
+.transactions-list .edit-btn:hover {
+  background-color: #ff9800;
+}
+
+/* Delete button (already referenced in JSX) */
+.transactions-list .delete-btn {
+  background-color: #ff4b5c;
+  color: #fff;
+}
+
+.transactions-list .delete-btn:hover {
+  background-color: #ff2a3d;
+}
+
+/* Update button (edit mode uses same button) */
+.add-transaction button {
+  margin-top: 5px;
+}
+
+/* Cancel edit button */
+.add-transaction .cancel-btn {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #555;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-transaction .cancel-btn:hover {
+  background-color: #777;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .dashboard-content {
